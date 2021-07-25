@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <meta name="description" content="skymoment 王振宇平凡的一生">
+  <meta name="keywords" content="平凡的一生,skymoment,技术,iOS,前端,java,振宇">
+  <link rel="icon" href="/img/zhenyu.png">
+  <title>skymoment's blog</title>
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="/js/lib/fslightbox.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/zhenyu.png">
+      
+      <span class="navbar-logo-dsc">skymoment's blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">首页 </a>
+    
+    <a href="/archives" class="navbar-menu-item">归档 </a>
+    
+    <a href="/tags" class="navbar-menu-item">标签 </a>
+    
+    <a href="/categories" class="navbar-menu-item">分类 </a>
+    
+    <a href="/about" class="navbar-menu-item">关于 </a>
+    
+    <a href="/links" class="navbar-menu-item">友链 </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+  </div>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      找工作回忆录（一）
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2021-07-12T15:59:08.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2021年7月12日</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/文章/" class="post-meta-link">文章</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>917 字</span>
+    
+    <!-- busuanzi 统计 -->
+    
+    <span class="dot"></span>
+    <span class="busuanzi_container_page_pv">
+      <span>阅读&nbsp;</span><span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/找工作/" class="post-meta-link">找工作</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <p>细数来说，这应该是我第三次要找工作了。14年秋天从学校出来找工作，年轻不知天高地厚，也不知道自己有多少斤两，辗转在北京的地铁线上，观察着“首都”繁华街道上的人来人往。看着人群，挤着地铁、公交，人生第一次感受到了“身为蝼蚁”的感觉，就像小时候观察地上的蚂蚁一样，它们井然有序、各司其职的在地上爬成一条条线，渺小、平凡、可敬，心中却有觉得又有一丝“可伶”。学校的对我来说是应试教育的工厂，不仅是学生应试，老师也是应试，我不是那种记忆力好的人，对于应试的知识我基本上忘的很快。在大学学了很多的专业知识，但也仅局限于应付考试，那时的我实在是找不到应用场景，尤其是天书一般的高数、离散、编译原理、算法 等等。秉承着60分刚好，多一分浪费，少一分犯罪的准则，顺利的毕了业。<br>
+在乔布斯<code>iPhone</code>横空出世的影响下，在大学自学了iOS，用用控件，画画界面，就可以在模拟器中跑起来，这相对于那些枯燥的理论课来说，无疑是“精装修”对“毛坯房”的降维打击。但对于编程这条路，我其实很是迷茫，很对东西仅仅是能用而已，不知道能用成什么样子，什么时候用。在就业的压力下，试着写了一个记日记的App，控件用的原生的，没有颜色搭配，没有图片只能写写文字，就像是小学生的日记本，几月几日天气怎样。就这样拿着“小学生的作品”，在“首都”海投着实习简历，薪资要的2K。找了大概四五家，就在快要失望时候，感谢“邓皆斌”邓老大给了一份实习的机会，才知道了原来编程开发的程序叫做<code>项目</code>，做项目之前的讨论叫做<code>需求分析</code>，整理需求与原型的同学叫<code>产品经理</code>，出设计稿的同学叫<code>设计师</code>，提供<code>Api</code>的同学是用<code>php</code>的<code>后端开发</code>，前后端数据传输用的叫<code>json</code>。这一套正规军，直接把我干懵逼了，就像打开了一扇新世界的大门，也明白了iOS开发在整个团队中是一个什么样的位置。<br>
+年少总是不安分的，同在北京住同一屋的三个同学，要离开北京了，相约去上海找工作，闯荡一番。在三个人的忽悠下，我向邓老大（平时我们也是这么称呼他的）提出了辞职，在和老大在一番谈话之后，我还是选择了跑路。回首看来这其实算一个错误的决定，错过在北京发展的机会，错过了一个牛逼技术团队发展的历程。我回味了一下当时的心理，初入社会，这三个室友是我北漂的精神寄托，他们这一走，我就是孤家寡人一个，面对着这种朝九晚六无人陪伴的生活，我觉得我会坚持不下去，生活也没意思，毕竟逗比欢乐多，逗比多了欢乐更多；还有一点，就是我觉得两千的工资低了，我放弃了一份两千的工资，再和同学一起去找一份差不多的的实习，好像可以更开心。</p>
+<p><img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/zgc.png" alt="中关村" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/zgc.png" class="lozad post-image"></p>
+<p>未完待续…</p>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-info copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://skymoment.cn/about">skymoment</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://skymoment.cn/2021/07/12/Find_Job_01/">https://skymoment.cn/2021/07/12/Find_Job_01/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2021/07/13/Hexo_04/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">Hexo Kaze 进阶：keywords与fslightbox </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2021/06/26/Hexo_03/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">（下）搭建博客：Hexo部署上线 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/zhenyu.png" class="author-img">
+
+<p class="author-name">skymoment</p>
+<p class="author-description">stay hungry stay foolish</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>10</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>2</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>4</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="mailto:guxuloop@gmail.com">
+        <i class="iconfont icon-mail society-icon"></i>
+        guxuloop@gmail.com
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+
+    </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术">
+        <div class="categories-list-item">
+          技术
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/文章">
+        <div class="categories-list-item">
+          文章
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\hexo" title="hexo"><div class="tags-list-item">hexo</div></a>
+    
+    <a href="\tags\找工作" title="找工作"><div class="tags-list-item">找工作</div></a>
+    
+    <a href="\tags\数据与算法" title="数据与算法"><div class="tags-list-item">数据与算法</div></a>
+    
+    <a href="\tags\前端" title="前端"><div class="tags-list-item">前端</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021年7月18日</div>
+        <a href="/2021/07/18/Find_Job_02/"><div class="recent-posts-item-content">找工作回忆录（二）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021年7月18日</div>
+        <a href="/2021/07/18/Front_01/"><div class="recent-posts-item-content">前端知识之HTML</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021年7月14日</div>
+        <a href="/2021/07/14/DataStruct_01/"><div class="recent-posts-item-content">数据结构（一）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021年7月14日</div>
+        <a href="/2021/07/14/A_D_S_01/"><div class="recent-posts-item-content">数据结构与算法：前言</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2021 -
+          
+          2021
+        </span>
+        <a href="/" class="footer-link">skymoment's blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://beian.miit.gov.cn/">赣ICP备16008328号-1 </a>
+    </div>
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量
+        <span id="busuanzi_container_site_pv">
+          <span id="busuanzi_value_site_pv"></span>
+        </span>
+        次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数
+        <span id="busuanzi_container_site_uv">
+          <span id="busuanzi_value_site_uv"></span>
+        </span>
+        次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('data-type', 'image');
+      wrapper.setAttribute('href', img[i].src);
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("/js/lib/fslightbox.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
+
+</html>

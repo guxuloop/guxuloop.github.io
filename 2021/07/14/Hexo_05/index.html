@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <meta name="description" content="skymoment 王振宇平凡的一生">
+  <meta name="keywords" content="平凡的一生,skymoment,技术,iOS,前端,java,振宇">
+  <link rel="icon" href="/img/zhenyu.png">
+  <title>skymoment's blog</title>
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="/js/lib/fslightbox.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/zhenyu.png">
+      
+      <span class="navbar-logo-dsc">skymoment's blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">首页 </a>
+    
+    <a href="/archives" class="navbar-menu-item">归档 </a>
+    
+    <a href="/tags" class="navbar-menu-item">标签 </a>
+    
+    <a href="/categories" class="navbar-menu-item">分类 </a>
+    
+    <a href="/about" class="navbar-menu-item">关于 </a>
+    
+    <a href="/links" class="navbar-menu-item">友链 </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+  </div>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      Hexo Kaze 进阶：busuanzi 统计
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2021-07-14T00:59:59.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2021年7月14日</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/技术/" class="post-meta-link">技术</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>482 字</span>
+    
+    <!-- busuanzi 统计 -->
+    
+    <span class="dot"></span>
+    <span class="busuanzi_container_page_pv">
+      <span>阅读&nbsp;</span><span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/hexo/" class="post-meta-link">hexo</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <p><img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/hexo.png" alt="hexo" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/hexo.png" class="lozad post-image"></p>
+<h3 id="busuanzi-统计调研"><a target="_blank" rel="noopener" href="http://busuanzi.ibruce.info/">busuanzi</a> 统计调研</h3>
+<p>对于博客统计，我们可以分为两个需求</p>
+<ul>
+<li>每个博客的阅读数统计</li>
+<li>整个博客站点的阅读数统计</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://github.com/theme-kaze">Kaze 主题</a>默认集成了<a target="_blank" rel="noopener" href="http://busuanzi.ibruce.info/">busuanzi</a>用来统计阅读数。进入<code>busuanzi</code>官网我震惊了，没有<code>https</code>、没有<code>github</code>链接、页面很是简单… 导致我一度怀疑是否进错了官网🤔 ，因为没有参考文档，直接上官网源码。</p>
+<p><img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-07-26%2001.16.26.png" alt="busunzi" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-07-26%2001.16.26.png" class="lozad post-image"></p>
+<p>分析代码有三个<code>container</code>和三个<code>value</code></p>
+<ul>
+<li><code>busuanzi_container_page_pv</code>：页面pv容器
+<ul>
+<li><code>busuanzi_value_page_pv</code>：页面pv统计值，对应上图 <em>本文阅读量1152551次</em></li>
+</ul>
+</li>
+<li><code>busuanzi_container_site_pv</code>：站点pv容器
+<ul>
+<li><code>busuanzi_value_site_pv</code>：站点总pv统计值，对应上图 <em>本站总访问量4472893次</em></li>
+</ul>
+</li>
+<li><code>busuanzi_container_site_uv</code>： 站点uv容器
+<ul>
+<li><code>busuanzi_value_site_uv</code>：站点总uv统计值，对应上图 <em>本站总访客数1857875人</em></li>
+</ul>
+</li>
+</ul>
+<h3 id="博客项目配置-busuanzi">博客项目配置 busuanzi</h3>
+<p>根据官网的代码的提示，我们进行相应的修改。</p>
+<ol>
+<li><code>_config.kaze.yml</code>文件开启统计</li>
+</ol>
+<pre class="highlight"><span class="line"><span class="attr">footer:</span></span><br><span class="line">  <span class="attr">copyYear:</span> <span class="number">2021</span></span><br><span class="line">  <span class="attr">RecordInfo:</span> <span class="string">&quot;赣ICP备16008328号-1&quot;</span> <span class="comment"># &#x27;某ICP备xxx号&#x27;</span></span><br><span class="line">  <span class="attr">govRecordInfo:</span> <span class="string">&quot;&quot;</span> </span><br><span class="line">  <span class="attr">govRecordUrl:</span> <span class="string">&quot;https://beian.miit.gov.cn/&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">statistics:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">busuanzi</span> <span class="comment"># now version only supports busuanzi</span></span><br><span class="line">    <span class="attr">pv:</span></span><br><span class="line">      <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">      <span class="attr">style:</span> <span class="string">本站总访问量&#123;&#125;次</span> <span class="comment"># the style will be shown as $1&#123;pv&#125;$2</span></span><br><span class="line">    <span class="attr">uv:</span></span><br><span class="line">      <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">      <span class="attr">style:</span> <span class="string">本站总访客数&#123;&#125;次</span> <span class="comment"># the style will be shown as $1&#123;uv&#125;$2</span></span><br></pre>
+<ol start="2">
+<li>
+<p>找到<code>themes/kaze/layout/post.ejs</code>文件，添加单页面统计
+<img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-07-26%2001.33.44.png" alt="kaze post.ejs" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-07-26%2001.33.44.png" class="lozad post-image"></p>
+</li>
+<li>
+<p>配置之后，你会发现在本地<code>hexo serve</code>运行时，统计数值很大，不要慌！上线就好了。
+<img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-07-26%2001.42.20.png" alt="busuanzi" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-07-26%2001.42.20.png" class="lozad post-image"></p>
+</li>
+</ol>
+<h3 id="问题">问题</h3>
+<p>经过上线测试之后，站点的访问量统计和访问总访客数，没有问题。但是单个页面（博客）的访问数是有问题的。<code>busuanzi_value_page_pv</code>的pv值与<code>busuanzi_container_site_pv</code>的pv值相等，那就是说：单页面统计有问题！上图证明。
+<img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-07-26%2001.46.41.png" alt="问题" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-07-26%2001.46.41.png" class="lozad post-image"></p>
+<p>目前看着，<code>busuanzi</code>还没有完善好。同学们也可以关注下其他的方案，有能力的同学我觉得可以自己写一个开源的统计的💪</p>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-info copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://skymoment.cn/about">skymoment</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://skymoment.cn/2021/07/14/Hexo_05/">https://skymoment.cn/2021/07/14/Hexo_05/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2021/07/14/A_D_S_01/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">数据结构与算法：前言 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2021/07/13/Hexo_04/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">Hexo Kaze 进阶：keywords与fslightbox </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#busuanzi-%E7%BB%9F%E8%AE%A1%E8%B0%83%E7%A0%94"><span class="toc-text">busuanzi 统计调研</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%9A%E5%AE%A2%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE-busuanzi"><span class="toc-text">博客项目配置 busuanzi</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98"><span class="toc-text">问题</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/zhenyu.png" class="author-img">
+
+<p class="author-name">skymoment</p>
+<p class="author-description">stay hungry stay foolish</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>10</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>2</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>4</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="mailto:guxuloop@gmail.com">
+        <i class="iconfont icon-mail society-icon"></i>
+        guxuloop@gmail.com
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#busuanzi-%E7%BB%9F%E8%AE%A1%E8%B0%83%E7%A0%94"><span class="toc-text">busuanzi 统计调研</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%9A%E5%AE%A2%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE-busuanzi"><span class="toc-text">博客项目配置 busuanzi</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98"><span class="toc-text">问题</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术">
+        <div class="categories-list-item">
+          技术
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/文章">
+        <div class="categories-list-item">
+          文章
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\hexo" title="hexo"><div class="tags-list-item">hexo</div></a>
+    
+    <a href="\tags\找工作" title="找工作"><div class="tags-list-item">找工作</div></a>
+    
+    <a href="\tags\数据与算法" title="数据与算法"><div class="tags-list-item">数据与算法</div></a>
+    
+    <a href="\tags\前端" title="前端"><div class="tags-list-item">前端</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#busuanzi-%E7%BB%9F%E8%AE%A1%E8%B0%83%E7%A0%94"><span class="toc-text">busuanzi 统计调研</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%9A%E5%AE%A2%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE-busuanzi"><span class="toc-text">博客项目配置 busuanzi</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98"><span class="toc-text">问题</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021年7月18日</div>
+        <a href="/2021/07/18/Find_Job_02/"><div class="recent-posts-item-content">找工作回忆录（二）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021年7月18日</div>
+        <a href="/2021/07/18/Front_01/"><div class="recent-posts-item-content">前端知识之HTML</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021年7月14日</div>
+        <a href="/2021/07/14/DataStruct_01/"><div class="recent-posts-item-content">数据结构（一）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021年7月14日</div>
+        <a href="/2021/07/14/A_D_S_01/"><div class="recent-posts-item-content">数据结构与算法：前言</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2021 -
+          
+          2021
+        </span>
+        <a href="/" class="footer-link">skymoment's blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://beian.miit.gov.cn/">赣ICP备16008328号-1 </a>
+    </div>
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量
+        <span id="busuanzi_container_site_pv">
+          <span id="busuanzi_value_site_pv"></span>
+        </span>
+        次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数
+        <span id="busuanzi_container_site_uv">
+          <span id="busuanzi_value_site_uv"></span>
+        </span>
+        次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('data-type', 'image');
+      wrapper.setAttribute('href', img[i].src);
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("/js/lib/fslightbox.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
+
+</html>

@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <meta name="description" content="skymoment 王振宇平凡的一生">
+  <meta name="keywords" content="平凡的一生,skymoment,技术,iOS,前端,java,振宇">
+  <link rel="icon" href="/img/zhenyu.png">
+  <title>skymoment's blog</title>
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="/js/lib/fslightbox.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/zhenyu.png">
+      
+      <span class="navbar-logo-dsc">skymoment's blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">首页 </a>
+    
+    <a href="/archives" class="navbar-menu-item">归档 </a>
+    
+    <a href="/tags" class="navbar-menu-item">标签 </a>
+    
+    <a href="/categories" class="navbar-menu-item">分类 </a>
+    
+    <a href="/about" class="navbar-menu-item">关于 </a>
+    
+    <a href="/links" class="navbar-menu-item">友链 </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+  </div>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      前端知识之HTML
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2021-07-18T05:40:20.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2021年7月18日</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/技术/" class="post-meta-link">技术</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>1.5k 字</span>
+    
+    <!-- busuanzi 统计 -->
+    
+    <span class="dot"></span>
+    <span class="busuanzi_container_page_pv">
+      <span>阅读&nbsp;</span><span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/前端/" class="post-meta-link">前端</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <p><img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-07-18%2019.47.43.png" alt="MDN" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-07-18%2019.47.43.png" class="lozad post-image"></p>
+<p>HTML：Hypertext Markup Language 超文本标记语言。我就不扯淡了，直接上参考链接，并附上鄙人实际接触到的知识点。</p>
+<p>参考链接</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Learn/Getting_started_with_the_web/HTML_basics">MDN HTML基础</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6905294475539513352#heading-16">高频前端面试题汇总之HTML篇</a></li>
+</ul>
+<p>实际案例：<a target="_blank" rel="noopener" href="https://www.baidu.com/">百度网页</a></p>
+<p><img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-07-18%2018.33.04.png" alt="baidu" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-07-18%2018.33.04.png" class="lozad post-image"></p>
+<h3 id="1-DOCTYPE">1. DOCTYPE</h3>
+<p>参考<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Quirks_Mode_and_Standards_Mode">MDN 怪异模式和标准模式</a>，就目前来说的，我都是用的标准模式，因为怪异模式都是历史遗留的问题，2021年的今天在移动浪潮的推动下，标准模式已经一统天下了。</p>
+<blockquote>
+<p>目前浏览器的排版引擎使用三种模式：怪异模式（Quirks mode）、接近标准模式（Almost standards mode）、以及标准模式（Standards mode）。在怪异模式下，排版会模拟 Navigator 4 与 Internet Explorer 5 的非标准行为。</p>
+</blockquote>
+<pre class="highlight"><span class="line"><span class="comment">&lt;!-- 浏览器的排版引擎使用使用标准模式 --&gt;</span></span><br><span class="line">Content-Type: text/html</span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">en</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">utf-8</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>HTML<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>I am a HTML document<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre>
+<ul>
+<li>XHTML: 是以前用于描述为符合XML语法规则而编写的HTML文档的一种语法</li>
+</ul>
+<pre class="highlight"><span class="line">Content-Type: application/xhtml+xml</span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.w3.org/1999/xhtml&quot;</span> <span class="attr">xml:lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>XHTML<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>I am a XHTML document<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre>
+<h3 id="2-meta">2. meta</h3>
+<pre class="highlight"><span class="line"><span class="comment">&lt;!-- referrer policy --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;referrer&quot;</span> <span class="attr">content</span>=<span class="string">&quot;always&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 文档字符编码 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">  H5页面适配</span></span><br><span class="line"><span class="comment">  width=device-width：页面与屏幕等宽</span></span><br><span class="line"><span class="comment">  minimum-scale=1.0,maximum-scale=1.0：页面最小、最大的倍数都是1.0，即不允许缩放</span></span><br><span class="line"><span class="comment">  user-scalable：禁止用户缩放手势</span></span><br><span class="line"><span class="comment"> --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 做DNS资源预解析 加快页面加载速度--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;x-dns-prefetch-control&quot;</span> <span class="attr">content</span>=<span class="string">&quot;on&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 利于SEC的网页内容描述 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;description&quot;</span> <span class="attr">content</span>=<span class="string">&quot;全球最大的中文搜索引擎、致力于让网民更便捷地获取信息，找到所求。百度超过千亿的中文网页数据库，可以瞬间找到相关的搜索结果。&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 利于SEO的关键词 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;keywords&quot;</span> <span class="attr">content</span>=<span class="string">&quot;面试,前端&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;format-detection&quot;</span> <span class="attr">content</span>=<span class="string">&quot;telephone=no&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 缓存控制：不缓存 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;cache-control&quot;</span> <span class="attr">content</span>=<span class="string">&quot;no-cache&quot;</span>&gt;</span></span><br><span class="line"></span><br></pre>
+<h4 id="referrer-值得深究"><code>referrer</code> 值得深究</h4>
+<ul>
+<li>参考<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Referrer-Policy">MDN Referrer-Policy</a></li>
+<li>参考大神的文章<a target="_blank" rel="noopener" href="https://imququ.com/post/referrer-policy.html">Referrer Policy 介绍</a></li>
+</ul>
+<p><img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-07-18%2019.28.03.png" alt="Referrer-Policy" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-07-18%2019.28.03.png" class="lozad post-image"></p>
+<p>我的理解，用户在访问网页时候，触发其他的资源http请求：js/css/api，http请求head中会带有referer字段，而referer的值，是由referer决定的，默认值为<code>no-referrer-when-downgrade</code></p>
+<blockquote>
+<p>no-referrer-when-downgrade （默认值）
+在没有指定任何策略的情况下用户代理的默认行为。在同等安全级别的情况下，引用页面的地址会被发送(HTTPS-&gt;HTTPS)，但是在降级的情况下不会被发送 (HTTPS-&gt;HTTP)。</p>
+</blockquote>
+<p>即如果是https的状态下的请求，都会在head referer字段中带上当前页面的链接</p>
+<h4 id="X-DNS-Prefetch-Control-值得深究">X-DNS-Prefetch-Control 值得深究</h4>
+<p>参考链接：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/X-DNS-Prefetch-Control">MDN X-DNS-Prefetch-Control</a></p>
+<blockquote>
+<p>X-DNS-Prefetch-Control 头控制着浏览器的 DNS 预读取功能。 DNS 预读取是一项使浏览器主动去执行域名解析的功能，其范围包括文档的所有链接，无论是图片的，CSS 的，还是 JavaScript 等其他用户能够点击的 URL。
+因为预读取会在后台执行，所以 DNS 很可能在链接对应的东西出现之前就已经解析完毕。这能够减少用户点击链接时的延迟。</p>
+</blockquote>
+<p><code>X-DNS-Prefetch-Control</code> 与 <code>link</code> 一起使用</p>
+<pre class="highlight"><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;x-dns-prefetch-control&quot;</span> <span class="attr">content</span>=<span class="string">&quot;on&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;dns-prefetch&quot;</span> <span class="attr">href</span>=<span class="string">&quot;//m.baidu.com&quot;</span>&gt;</span></span><br></pre>
+<h3 id="3-link">3. link</h3>
+<p>参考链接：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/link">MDN link</a></p>
+<blockquote>
+<p>HTML外部资源链接元素 (<link>) 规定了当前文档与外部资源的关系。该元素最常用于链接样式表，此外也可以被用来创建站点图标(比如PC端的“favicon”图标和移动设备上用以显示在主屏幕的图标) 。</p>
+</blockquote>
+<p>也就加载外部<code>css</code>和<code>fav icon</code>的</p>
+<pre class="highlight"><span class="line"><span class="comment">&lt;!-- 存在 cdn 上的样式 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;dns-prefetch&quot;</span> <span class="attr">href</span>=<span class="string">&quot;//m.baidu.com&quot;</span>&gt;</span> </span><br><span class="line"><span class="comment">&lt;!-- 浏览器上面的小icon --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;shortcut icon&quot;</span> <span class="attr">href</span>=<span class="string">&quot;https://sm.bdimg.com/static/wiseindex/img/favicon64.ico&quot;</span> <span class="attr">type</span>=<span class="string">&quot;image/x-icon&quot;</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 苹果home页面是的图标 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;apple-touch-icon-precomposed&quot;</span> <span class="attr">href</span>=<span class="string">&quot;https://sm.bdimg.com/static/wiseindex/img/screen_icon_new.png&quot;</span>&gt;</span></span><br></pre>
+<h3 id="4-script-与-noscript">4. script 与 noscript</h3>
+<p>参考链接：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/script">MDN script</a></p>
+<blockquote>
+<p>HTML <code>&lt;script&gt;</code>元素用于嵌入或引用可执行脚本。这通常用作嵌入或者指向 JavaScript 代码。</p>
+</blockquote>
+<pre class="highlight"><span class="line"><span class="comment">&lt;!-- async 异步加载外部js文件，无法控制顺序 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">data-src</span>=<span class="string">&quot;https://sm.bdimg.com/static/./wiseindex/js/package/superframe_5b7bdae.js&quot;</span> <span class="attr">src</span>=<span class="string">&quot;https://sm.bdimg.com/static/./wiseindex/js/package/superframe_5b7bdae.js&quot;</span> <span class="attr">async</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- defer 延迟加载外部js文件，同是defer 按顺序加载 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">src</span>=<span class="string">&quot;https://hm.baidu.com/hm.js?12423ecbc0e2ca965d84259063d35238&quot;</span> <span class="attr">defer</span>=<span class="string">&quot;defer&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre>
+<p>参考链接：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/noscript">MDN noscript</a></p>
+<blockquote>
+<p>如果页面上的脚本类型不受支持或者当前在浏览器中关闭了脚本，则在 HTML <code>&lt;noscript&gt;</code> 元素中定义脚本未被执行时的替代内容。</p>
+</blockquote>
+<p><img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-07-18%2022.42.00.png" alt="MDN noscript" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-07-18%2022.42.00.png" class="lozad post-image"></p>
+<h3 id="5-其他标签">5. 其他标签</h3>
+<p>其他标签的使用方法，在<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Learn/Getting_started_with_the_web/HTML_basics">MDN HTML基础</a>文档中都有，就不做过多的介绍了，只记录些实用的又很少用标签，会不间断补充。</p>
+<h4 id="label">label</h4>
+<p>参考的：<a target="_blank" rel="noopener" href="https://juejin.cn/post/6905294475539513352#heading-11">https://juejin.cn/post/6905294475539513352#heading-11</a></p>
+<blockquote>
+<p>label标签来定义表单控件的关系：当用户选择label标签时，浏览器会自动将焦点转到和label标签相关的表单控件上。</p>
+</blockquote>
+<pre class="highlight"><span class="line"><span class="comment">&lt;!-- label 与 input 成对使用 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;username&quot;</span>&gt;</span>Click me<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">id</span>=<span class="string">&quot;username&quot;</span>&gt;</span></span><br></pre>
+  </div>
+  <div>
+  
+  <div class="post-note note-info copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://skymoment.cn/about">skymoment</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://skymoment.cn/2021/07/18/Front_01/">https://skymoment.cn/2021/07/18/Front_01/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2021/07/18/Find_Job_02/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">找工作回忆录（二） </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2021/07/14/DataStruct_01/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">数据结构（一） </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-DOCTYPE"><span class="toc-text">1. DOCTYPE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-meta"><span class="toc-text">2. meta</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#referrer-%E5%80%BC%E5%BE%97%E6%B7%B1%E7%A9%B6"><span class="toc-text">referrer 值得深究</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#X-DNS-Prefetch-Control-%E5%80%BC%E5%BE%97%E6%B7%B1%E7%A9%B6"><span class="toc-text">X-DNS-Prefetch-Control 值得深究</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-link"><span class="toc-text">3. link</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-script-%E4%B8%8E-noscript"><span class="toc-text">4. script 与 noscript</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%85%B6%E4%BB%96%E6%A0%87%E7%AD%BE"><span class="toc-text">5. 其他标签</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#label"><span class="toc-text">label</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/zhenyu.png" class="author-img">
+
+<p class="author-name">skymoment</p>
+<p class="author-description">stay hungry stay foolish</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>10</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>2</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>4</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="mailto:guxuloop@gmail.com">
+        <i class="iconfont icon-mail society-icon"></i>
+        guxuloop@gmail.com
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-DOCTYPE"><span class="toc-text">1. DOCTYPE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-meta"><span class="toc-text">2. meta</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#referrer-%E5%80%BC%E5%BE%97%E6%B7%B1%E7%A9%B6"><span class="toc-text">referrer 值得深究</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#X-DNS-Prefetch-Control-%E5%80%BC%E5%BE%97%E6%B7%B1%E7%A9%B6"><span class="toc-text">X-DNS-Prefetch-Control 值得深究</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-link"><span class="toc-text">3. link</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-script-%E4%B8%8E-noscript"><span class="toc-text">4. script 与 noscript</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%85%B6%E4%BB%96%E6%A0%87%E7%AD%BE"><span class="toc-text">5. 其他标签</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#label"><span class="toc-text">label</span></a></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术">
+        <div class="categories-list-item">
+          技术
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/文章">
+        <div class="categories-list-item">
+          文章
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\hexo" title="hexo"><div class="tags-list-item">hexo</div></a>
+    
+    <a href="\tags\找工作" title="找工作"><div class="tags-list-item">找工作</div></a>
+    
+    <a href="\tags\数据与算法" title="数据与算法"><div class="tags-list-item">数据与算法</div></a>
+    
+    <a href="\tags\前端" title="前端"><div class="tags-list-item">前端</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-DOCTYPE"><span class="toc-text">1. DOCTYPE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-meta"><span class="toc-text">2. meta</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#referrer-%E5%80%BC%E5%BE%97%E6%B7%B1%E7%A9%B6"><span class="toc-text">referrer 值得深究</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#X-DNS-Prefetch-Control-%E5%80%BC%E5%BE%97%E6%B7%B1%E7%A9%B6"><span class="toc-text">X-DNS-Prefetch-Control 值得深究</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-link"><span class="toc-text">3. link</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-script-%E4%B8%8E-noscript"><span class="toc-text">4. script 与 noscript</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%85%B6%E4%BB%96%E6%A0%87%E7%AD%BE"><span class="toc-text">5. 其他标签</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#label"><span class="toc-text">label</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021年7月18日</div>
+        <a href="/2021/07/18/Find_Job_02/"><div class="recent-posts-item-content">找工作回忆录（二）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021年7月18日</div>
+        <a href="/2021/07/18/Front_01/"><div class="recent-posts-item-content">前端知识之HTML</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021年7月14日</div>
+        <a href="/2021/07/14/DataStruct_01/"><div class="recent-posts-item-content">数据结构（一）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021年7月14日</div>
+        <a href="/2021/07/14/A_D_S_01/"><div class="recent-posts-item-content">数据结构与算法：前言</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2021 -
+          
+          2021
+        </span>
+        <a href="/" class="footer-link">skymoment's blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://beian.miit.gov.cn/">赣ICP备16008328号-1 </a>
+    </div>
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量
+        <span id="busuanzi_container_site_pv">
+          <span id="busuanzi_value_site_pv"></span>
+        </span>
+        次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数
+        <span id="busuanzi_container_site_uv">
+          <span id="busuanzi_value_site_uv"></span>
+        </span>
+        次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('data-type', 'image');
+      wrapper.setAttribute('href', img[i].src);
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("/js/lib/fslightbox.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
+
+</html>

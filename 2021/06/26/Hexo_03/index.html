@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <meta name="description" content="skymoment 王振宇平凡的一生">
+  <meta name="keywords" content="平凡的一生,skymoment,技术,iOS,前端,java,振宇">
+  <link rel="icon" href="/img/zhenyu.png">
+  <title>skymoment's blog</title>
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="/js/lib/fslightbox.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/zhenyu.png">
+      
+      <span class="navbar-logo-dsc">skymoment's blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">首页 </a>
+    
+    <a href="/archives" class="navbar-menu-item">归档 </a>
+    
+    <a href="/tags" class="navbar-menu-item">标签 </a>
+    
+    <a href="/categories" class="navbar-menu-item">分类 </a>
+    
+    <a href="/about" class="navbar-menu-item">关于 </a>
+    
+    <a href="/links" class="navbar-menu-item">友链 </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+  </div>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      （下）搭建博客：Hexo部署上线
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2021-06-26T15:59:08.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2021年6月26日</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/技术/" class="post-meta-link">技术</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>727 字</span>
+    
+    <!-- busuanzi 统计 -->
+    
+    <span class="dot"></span>
+    <span class="busuanzi_container_page_pv">
+      <span>阅读&nbsp;</span><span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/hexo/" class="post-meta-link">hexo</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <p><img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/hexo.png" alt="hexo" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/hexo.png" class="lozad post-image"></p>
+<h2 id="怎么部署">怎么部署</h2>
+<p>上线部署的话，大致分为两种：一种是托管到第三方平台，一种是部署到自己的服务器。官方文档已经很全面了，我就不做过多的介绍了😏  <s>偷懒？不存在的</s></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/one-command-deployment">Hexo 项目部署：https://hexo.io/zh-cn/docs/one-command-deployment</a></li>
+</ul>
+<h3 id="GitHub-第一次部署扑街">GitHub 第一次部署扑街</h3>
+<ol>
+<li>
+<p>你要有个<a target="_blank" rel="noopener" href="https://github.com/">GitHub</a>的账号，没有的同学赶紧去注册！注册！注册！ <s>“全球最大的同性交友网站”</s></p>
+</li>
+<li>
+<p>在<code>Github</code>创建一个项目<code>blog</code> 或者 其他你喜欢的名字
+<img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-06-26%2018.52.12.png" alt="Github Blog" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-06-26%2018.52.12.png" class="lozad post-image"></p>
+</li>
+<li>
+<p>在上述页面，点击<code>setting</code>。滚动到<strong>GitHub Pages</strong>部分
+<img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-06-26%2019.01.29.png" alt="GitHub Pages" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-06-26%2019.01.29.png" class="lozad post-image"></p>
+</li>
+<li>
+<p>选择发布在<strong>Github Pages</strong>的分支，将自动发布 <a target="_blank" rel="noopener" href="https://guxuloop.github.io/blog/">https://guxuloop.github.io/blog/</a>
+<img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-06-26%2019.06.49.png" alt="GitHub" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-06-26%2019.06.49.png" class="lozad post-image"></p>
+</li>
+<li>
+<p>在博客项目中，安装Git发布的依赖<code>npm install hexo-deployer-git --save</code></p>
+</li>
+</ol>
+<pre class="highlight"><span class="line">npm install hexo-deployer-git --save</span><br></pre>
+<ol start="6">
+<li>在博客项目<code>_config.yml</code>，添加配置</li>
+</ol>
+<pre class="highlight"><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: https://github.com/guxuloop/blog.git</span><br><span class="line">  branch: main</span><br><span class="line">  message: my blog int</span><br></pre>
+<pre class="highlight"><span class="line"><span class="comment"># 执行部署命令</span></span><br><span class="line">hexo deploy</span><br><span class="line"><span class="comment"># 输出信息如下</span></span><br><span class="line">*****</span><br><span class="line">*****</span><br><span class="line">Enumerating objects: 58, <span class="keyword">done</span>.</span><br><span class="line">Counting objects: 100% (58/58), <span class="keyword">done</span>.</span><br><span class="line">Delta compression using up to 4 threads</span><br><span class="line">Compressing objects: 100% (43/43), <span class="keyword">done</span>.</span><br><span class="line">Writing objects: 100% (58/58), 161.44 KiB | 4.75 MiB/s, <span class="keyword">done</span>.</span><br><span class="line">Total 58 (delta 15), reused 0 (delta 0), pack-reused 0</span><br><span class="line">remote: Resolving deltas: 100% (15/15), <span class="keyword">done</span>.</span><br><span class="line">To https://github.com/guxuloop/blog.git</span><br><span class="line"> + 25bbf2e...f4b7cc9 HEAD -&gt; main (forced update)</span><br><span class="line">Branch <span class="string">&#x27;master&#x27;</span> <span class="built_in">set</span> up to track remote branch <span class="string">&#x27;main&#x27;</span> from <span class="string">&#x27;https://github.com/guxuloop/blog.git</span></span><br></pre>
+<ol start="7">
+<li>
+<p>再次访问<a target="_blank" rel="noopener" href="https://guxuloop.github.io/blog/">https://guxuloop.github.io/blog/</a>，你会发现喜忧参半， Hexo 部署项目<code>css</code>和图片都是<code>404</code>🤣
+<img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-06-26%2019.26.37.png" alt="skymoment blog" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-06-26%2019.26.37.png" class="lozad post-image"></p>
+</li>
+<li>
+<p>我们根据报错分析一下</p>
+</li>
+</ol>
+<p>现象</p>
+<ul>
+<li>项目目的访问地址是为: <a target="_blank" rel="noopener" href="https://guxuloop.github.io/blog/">https://guxuloop.github.io/blog/</a></li>
+<li><code>css/js/img</code>的访问路径为 <a target="_blank" rel="noopener" href="https://guxuloop.github.io/**.js/.css/.png">https://guxuloop.github.io/**.js/.css/.png</a></li>
+</ul>
+<p>思路</p>
+<ul>
+<li>想办法直接通过 <a target="_blank" rel="noopener" href="https://guxuloop.github.io">https://guxuloop.github.io</a> 访问项目不要带子目录</li>
+<li>想办法为引用资源加上 <strong>blog</strong> 子目录，如：<a target="_blank" rel="noopener" href="https://guxuloop.github.io/blog/**.js/.css/.png">https://guxuloop.github.io/blog/**.js/.css/.png</a></li>
+</ul>
+<p>依据思路2解决，尝试<code>goolge一下</code>，<s>花了老子三个小时</s> 结果全部扑街😇，主要说的两种法</p>
+<ul>
+<li>修改<code>_config.yml</code>文件，<code>url</code>以及<code>root</code>，尝试结果部分css、js可访问。第三方主题内部引用js并不会自动拼接上子目录。如果自己手动改或者写插件解决，成本太高。</li>
+<li>在<code>Github blog</code>项目中，直接新增<code>.nojekyll</code>空文件，扑街、扑街、扑街！<s>MD我还看到，这方法顶着官方的帽子。</s></li>
+</ul>
+<p><img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-06-26%2021.43.49.png" alt="goolge一下" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-06-26%2021.43.49.png" class="lozad post-image"></p>
+<p>依据思路1,在<a target="_blank" rel="noopener" href="https://pages.github.com/">GitHub Pages</a>中找到了思路1的答案，于是进行了第二次部署</p>
+<p><img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-06-26%2021.53.56.png" alt="GitHub Pages png" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-06-26%2021.53.56.png" class="lozad post-image"></p>
+<h3 id="GitHub-第二次部署">GitHub 第二次部署</h3>
+<h4 id="GitHub-Pages"><a target="_blank" rel="noopener" href="https://pages.github.com/">GitHub Pages</a></h4>
+<p>根据<code>GitHub Pages</code>的提示，我只要在<code>GitHub</code>中，创建一个与我用户名同名的<code>用户名.github.io</code>的项目目录，我就可以通过<code>用户名.github.io</code>直接访问项目。简直不要太完美！！！🐕</p>
+<p><img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-06-26%2022.01.22.png" alt="GitHub png" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-06-26%2022.01.22.png" class="lozad post-image"></p>
+<p><img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-06-26%2022.03.39.png" alt="GitHub png" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-06-26%2022.03.39.png" class="lozad post-image"></p>
+<p>我在<code>GitHub</code>中创建了新的’<a target="_blank" rel="noopener" href="http://guxuloop.github.io">guxuloop.github.io</a>’目录，接着修改博客项目<code>_config.yml</code>配置</p>
+<pre class="highlight"><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: https://github.com/guxuloop/guxuloop.github.io.git</span><br><span class="line">  branch: main</span><br><span class="line">  message: my blog int</span><br><span class="line"></span><br></pre>
+<pre class="highlight"><span class="line">hexo deploy</span><br></pre>
+<p>访问<a target="_blank" rel="noopener" href="https://guxuloop.github.io/">https://guxuloop.github.io/</a>，<s>激动的眼泪夺眶而出！</s> 完美😇</p>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-info copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://skymoment.cn/about">skymoment</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://skymoment.cn/2021/06/26/Hexo_03/">https://skymoment.cn/2021/06/26/Hexo_03/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2021/07/12/Find_Job_01/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">找工作回忆录（一） </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2021/06/25/Hexo_02/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">（中）搭建博客：Hexo主题配置 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E9%83%A8%E7%BD%B2"><span class="toc-text">怎么部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#GitHub-%E7%AC%AC%E4%B8%80%E6%AC%A1%E9%83%A8%E7%BD%B2%E6%89%91%E8%A1%97"><span class="toc-text">GitHub 第一次部署扑街</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GitHub-%E7%AC%AC%E4%BA%8C%E6%AC%A1%E9%83%A8%E7%BD%B2"><span class="toc-text">GitHub 第二次部署</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#GitHub-Pages"><span class="toc-text">GitHub Pages</span></a></li></ol></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/zhenyu.png" class="author-img">
+
+<p class="author-name">skymoment</p>
+<p class="author-description">stay hungry stay foolish</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>10</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>2</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>4</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="mailto:guxuloop@gmail.com">
+        <i class="iconfont icon-mail society-icon"></i>
+        guxuloop@gmail.com
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E9%83%A8%E7%BD%B2"><span class="toc-text">怎么部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#GitHub-%E7%AC%AC%E4%B8%80%E6%AC%A1%E9%83%A8%E7%BD%B2%E6%89%91%E8%A1%97"><span class="toc-text">GitHub 第一次部署扑街</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GitHub-%E7%AC%AC%E4%BA%8C%E6%AC%A1%E9%83%A8%E7%BD%B2"><span class="toc-text">GitHub 第二次部署</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#GitHub-Pages"><span class="toc-text">GitHub Pages</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术">
+        <div class="categories-list-item">
+          技术
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/文章">
+        <div class="categories-list-item">
+          文章
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\hexo" title="hexo"><div class="tags-list-item">hexo</div></a>
+    
+    <a href="\tags\找工作" title="找工作"><div class="tags-list-item">找工作</div></a>
+    
+    <a href="\tags\数据与算法" title="数据与算法"><div class="tags-list-item">数据与算法</div></a>
+    
+    <a href="\tags\前端" title="前端"><div class="tags-list-item">前端</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E9%83%A8%E7%BD%B2"><span class="toc-text">怎么部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#GitHub-%E7%AC%AC%E4%B8%80%E6%AC%A1%E9%83%A8%E7%BD%B2%E6%89%91%E8%A1%97"><span class="toc-text">GitHub 第一次部署扑街</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GitHub-%E7%AC%AC%E4%BA%8C%E6%AC%A1%E9%83%A8%E7%BD%B2"><span class="toc-text">GitHub 第二次部署</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#GitHub-Pages"><span class="toc-text">GitHub Pages</span></a></li></ol></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021年7月18日</div>
+        <a href="/2021/07/18/Find_Job_02/"><div class="recent-posts-item-content">找工作回忆录（二）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021年7月18日</div>
+        <a href="/2021/07/18/Front_01/"><div class="recent-posts-item-content">前端知识之HTML</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021年7月14日</div>
+        <a href="/2021/07/14/DataStruct_01/"><div class="recent-posts-item-content">数据结构（一）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021年7月14日</div>
+        <a href="/2021/07/14/A_D_S_01/"><div class="recent-posts-item-content">数据结构与算法：前言</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2021 -
+          
+          2021
+        </span>
+        <a href="/" class="footer-link">skymoment's blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://beian.miit.gov.cn/">赣ICP备16008328号-1 </a>
+    </div>
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量
+        <span id="busuanzi_container_site_pv">
+          <span id="busuanzi_value_site_pv"></span>
+        </span>
+        次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数
+        <span id="busuanzi_container_site_uv">
+          <span id="busuanzi_value_site_uv"></span>
+        </span>
+        次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('data-type', 'image');
+      wrapper.setAttribute('href', img[i].src);
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("/js/lib/fslightbox.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
+
+</html>

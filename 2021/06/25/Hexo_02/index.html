@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <meta name="description" content="skymoment 王振宇平凡的一生">
+  <meta name="keywords" content="平凡的一生,skymoment,技术,iOS,前端,java,振宇">
+  <link rel="icon" href="/img/zhenyu.png">
+  <title>skymoment's blog</title>
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="/js/lib/fslightbox.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/zhenyu.png">
+      
+      <span class="navbar-logo-dsc">skymoment's blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">首页 </a>
+    
+    <a href="/archives" class="navbar-menu-item">归档 </a>
+    
+    <a href="/tags" class="navbar-menu-item">标签 </a>
+    
+    <a href="/categories" class="navbar-menu-item">分类 </a>
+    
+    <a href="/about" class="navbar-menu-item">关于 </a>
+    
+    <a href="/links" class="navbar-menu-item">友链 </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+  </div>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      （中）搭建博客：Hexo主题配置
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2021-06-25T13:59:08.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2021年6月25日</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/技术/" class="post-meta-link">技术</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>1.4k 字</span>
+    
+    <!-- busuanzi 统计 -->
+    
+    <span class="dot"></span>
+    <span class="busuanzi_container_page_pv">
+      <span>阅读&nbsp;</span><span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/hexo/" class="post-meta-link">hexo</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <p><img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/hexo.png" alt="hexo" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/hexo.png" class="lozad post-image"></p>
+<h2 id="怎么找主题">怎么找主题</h2>
+<p>上篇文章，我们已经可以正常运行、查看博客了，只要熟练的使用<code>MarkDown</code>语法写出属于自己的文章就可以了。但是自带的主题<code>hexo-theme-landscape</code>可能不会满足个性化的需求，因为不能设置自己的头像呀、联系方式呀、关于我们的页面呀！秉承着“能不造轮子，就不造轮子的”原则，我们去找轮子！（PS：有时间的同学，想自定义自己的博客，可以根据<a target="_blank" rel="noopener" href="https://hexo.io/docs/themes">Hexo文档-Themes</a>尽情尝试）本人我尝试了下<code>hexo-theme-kaze</code>的主题比较符合我的品味🤔。</p>
+<h3 id="Hexo官网主题列表">Hexo官网主题列表</h3>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://hexo.io/themes/">主题列表 https://hexo.io/themes/</a></li>
+</ul>
+<p>选择你看着顺眼的主题，有的点击进就有文档，有的是大神们的博客。知道主题名字了都可以去Github中搜索。
+<img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/hexo_01.png" alt="Hexo Themes" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/hexo_01.png" class="lozad post-image"></p>
+<h3 id="在GitHub寻找">在GitHub寻找</h3>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/">GitHub官网 https://github.com/</a></li>
+</ul>
+<p>在Github中搜索<code>hexo theme</code>，然后选择<code>Most Stars</code>，找找星星多的符不符合你的品味。</p>
+<p><img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-06-25%2018.06.48.png" alt="Github Result" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-06-25%2018.06.48.png" class="lozad post-image"></p>
+<h2 id="安装配置kaze">安装配置<code>kaze</code></h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/theme-kaze/hexo-theme-kaze">GitHub: kaze主题 https://github.com/theme-kaze/hexo-theme-kaze</a></li>
+</ul>
+<h3 id="安装">安装</h3>
+<p>方法一：进入博客目录<code>/Users/wangzhenyu/Desktop/blog</code>（我的博客路径）</p>
+<pre class="highlight"><span class="line">npm install hexo-theme-kaze</span><br></pre>
+<p>然后修改<code>blog/_config/_config.yml</code>配置文件</p>
+<pre class="highlight"><span class="line">theme: kaze</span><br></pre>
+<p>方法二：将<code>hexo-theme-kaze</code>项目，用Git/Zip的形式，下载到<code>blog/themes</code>，文件夹重命名为<strong>kaze</strong>（Zip记得解压后重命名）</p>
+<pre class="highlight"><span class="line">git <span class="built_in">clone</span> https://github.com/theme-kaze/hexo-theme-kaze.git</span><br></pre>
+<p>然后修改<code>blog/_config/_config.yml</code>配置文件</p>
+<pre class="highlight"><span class="line">theme: kaze</span><br></pre>
+<p>我使用的是：下载<code>zip</code>包，然后解压到项目<code>themes</code>文件夹下面。主要考虑到，我需要修改主题页面上的元素或者样式，自定义修改的程度高。</p>
+<pre class="highlight"><span class="line">hexo serve</span><br></pre>
+<p><img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-06-26%2014.11.43.png" alt="hexo theme kaze" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-06-26%2014.11.43.png" class="lozad post-image"></p>
+<h3 id="配置">配置</h3>
+<p>涉及知识点</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.runoob.com/w3cnote/yaml-intro.html">YAML教程</a>：与<code>json</code>类似,但是更简洁，特别适合用来表达或编辑数据结构.<code>YAML</code>文件名字以<code>.yml</code>结尾。也可以参考大神<a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2016/07/yaml.html">阮一峰的教程</a>。<code>hexo</code>项目所有的配置信息都在<code>.yml</code>文件中，所以这个是重点。我之前在<code>springboot</code>项目开发的时候，也接触过了，所以比较熟悉。</li>
+<li>基础的前端知识：<code>html + css + js</code></li>
+<li><a target="_blank" rel="noopener" href="https://www.iconfont.cn/">iconfont 阿里巴巴矢量图标库</a>：简单的来说就是以字体的形式来展图标。使用起来简单方便，开发者可以在图库中自己找想要的icon。前端开发者对于<code>iconfont</code>应该并不陌生。</li>
+</ul>
+<h4 id="修改主题默认配置">修改主题默认配置</h4>
+<p>参照项目中的有一个默认<strong>landscape</strong>主题的配置文件<code>_config.landscape.yml</code>，我也在项目根目录下面新建了一个<code>_config.kaze.yml</code>配置文件，用来配置主题中自己的配置信息，然后删除了<code>_config.landscape.yml</code>文件，因为用不上了。接着删除<code>hexo-theme-landscape</code>的依赖文件，如下</p>
+<pre class="highlight"><span class="line"><span class="comment"># 删除`hexo-theme-landscape`的依赖文件</span></span><br><span class="line">npm un hexo-theme-landscape</span><br></pre>
+<p>这时候有同学应该会问到，我TM哪里知道可以配置哪些东西🤔 ！这是个好问题，也很值得思考。</p>
+<ul>
+<li>第一思路是 <a target="_blank" rel="noopener" href="https://demo.theme-kaze.top/document/">kaze 主题官方文档</a>，文档中会提及大部分的配置，可以参考。</li>
+<li>第二思路是看源码，如果你是<code>npm install hexo-theme-kaze</code>安装的，你可以在<code>blog/node_modules</code>文件夹中找到<code>hexo-theme-kaze</code>源码。如果是<code>git/zip</code>形式安装的，在<code>blog/themes</code>文件中也可以找到。源码文件下面的<code>_config.yml</code>文件，包含了所有配置信息，文档中没有的这里也有，而且更直观，英语给力的同学，那更无压力！</li>
+</ul>
+<h5 id="修改作者信息">修改作者信息</h5>
+<p>在<code>_config.kaze.yml</code>文件中添加一下以下信息。Logo、头像等需要引用的图片，在<code>blog/source</code>文件夹中新建<code>img</code>文件，放入同学们自己的图片即可。</p>
+<pre class="highlight"><span class="line"><span class="attr">title:</span> <span class="string">skymoment&#x27;s</span> <span class="string">blog</span></span><br><span class="line"><span class="attr">subtitle:</span> <span class="string">stay</span> <span class="string">hungry</span> <span class="string">stay</span> <span class="string">foolish</span></span><br><span class="line"><span class="attr">author_description:</span> <span class="string">stay</span> <span class="string">hungry</span> <span class="string">stay</span> <span class="string">foolish</span></span><br><span class="line"><span class="attr">author:</span> <span class="string">skymoment</span></span><br><span class="line"><span class="attr">logo_img:</span> <span class="string">/img/zhenyu.png</span> <span class="comment"># put the logo on the $&#123;blog_path&#125;/source/img/$&#123;picname&#125;.png or use urls</span></span><br><span class="line"><span class="attr">author_img:</span> <span class="string">/img/zhenyu.png</span></span><br></pre>
+<h5 id="关于页面、邮件">关于页面、邮件</h5>
+<p>先要在<code>blog/source</code>目录下面新建<code>about</code>文件夹，然后在<code>about</code>文件夹下面新建<code>index.md</code>。接着写你的自我介绍即可。</p>
+<pre class="highlight"><span class="line"><span class="attr">about:</span></span><br><span class="line">  <span class="attr">description:</span> <span class="number">92</span><span class="string">年|江西·赣州|现居·上海|全栈</span></span><br><span class="line">  <span class="attr">social_links:</span> </span><br><span class="line">    <span class="bullet">-</span> </span><br><span class="line">      <span class="attr">icon:</span> <span class="string">icon-mail</span> </span><br><span class="line">      <span class="attr">link:</span> <span class="string">&#x27;mailto:guxuloop@gmail.com&#x27;</span></span><br><span class="line">      <span class="comment"># 自己新增的</span></span><br><span class="line">      <span class="attr">content:</span> <span class="string">&#x27;guxuloop@gmail.com&#x27;</span></span><br><span class="line"></span><br></pre>
+<p>其中 <code>content</code> 字段是我自己新增的，因为我想展示邮箱信息。需要修改源码</p>
+<ul>
+<li><code>blog/themes/kaze/layout/about.ejs</code> 文件</li>
+</ul>
+<pre class="highlight"><span class="line"></span><br><span class="line">&lt;div class=&quot;about-card-society&quot;&gt;</span><br><span class="line">  &lt;% if(theme.about.social_links) &#123; %&gt;</span><br><span class="line">  &lt;% for(const item of theme.about.social_links) &#123; %&gt;</span><br><span class="line">    &lt;div class=&quot;about-card-society-icon&quot;&gt;</span><br><span class="line">      &lt;a href=&quot;&lt;%= item.link %&gt;&quot; style=&quot;color: #50687c&quot;&gt;</span><br><span class="line">        &lt;i class=&quot;iconfont &lt;%= item.icon %&gt; society-icon&quot;&gt;&lt;/i&gt;</span><br><span class="line">        // 新增的 content 字段</span><br><span class="line">        &lt;%= item.content %&gt;</span><br><span class="line">      &lt;/a&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;% &#125; %&gt;</span><br><span class="line">  &lt;% &#125; %&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre>
+<ul>
+<li><code>blog/themes/kaze/layout/_partial/author.ejs</code> 文件</li>
+</ul>
+<pre class="highlight"><span class="line">&lt;% if(theme.about.social_links) &#123; %&gt;</span><br><span class="line">&lt;div class=&quot;author-card-society&quot;&gt;</span><br><span class="line">  &lt;% for(const item of theme.about.social_links) &#123; %&gt;</span><br><span class="line">    &lt;div class=&quot;author-card-society-icon&quot;&gt;</span><br><span class="line">      &lt;a href=&quot;&lt;%= item.link %&gt;&quot;&gt;</span><br><span class="line">        &lt;i class=&quot;iconfont &lt;%= item.icon %&gt; society-icon&quot;&gt;&lt;/i&gt;</span><br><span class="line">        // 新增的 content 字段</span><br><span class="line">        &lt;%= item.content %&gt;</span><br><span class="line">      &lt;/a&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;% &#125; %&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;% &#125; %&gt;</span><br></pre>
+<h5 id="版权信息">版权信息</h5>
+<pre class="highlight"><span class="line"><span class="attr">copyright:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">writer:</span> <span class="string">skymoment</span> <span class="comment"># if writer is empty we will use config.author as writer</span></span><br><span class="line">  <span class="attr">declare:</span> <span class="string">本博客所有文章除特别声明外，均采用&lt;a</span> <span class="string">target=&quot;_blank&quot;</span> <span class="string">rel=&quot;noopener&quot;</span> <span class="string">href=&quot;https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh&quot;&gt;CC</span> <span class="string">BY-NC-SA</span> <span class="number">4.0</span> <span class="string">协议&lt;/a&gt;。转载请注明出处！</span></span><br><span class="line">  <span class="attr">style:</span> <span class="string">info</span></span><br></pre>
+<h2 id="结语">结语</h2>
+<p>基本上配置就已经完成了，更多的配置就由同学们自行发挥了！后面的有时间，会出<strong>进阶教程</strong>，可能包括：评论、访问统计、markdown 视频与音频。同学们有兴趣也可以自己去试试😏</p>
+<p><img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-06-26%2016.41.56.png" alt="skymoment's kaze" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-06-26%2016.41.56.png" class="lozad post-image"></p>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-info copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://skymoment.cn/about">skymoment</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://skymoment.cn/2021/06/25/Hexo_02/">https://skymoment.cn/2021/06/25/Hexo_02/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2021/06/26/Hexo_03/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">（下）搭建博客：Hexo部署上线 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2021/06/24/Hexo_01/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">（上）搭建博客：Hello Hexo </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E6%89%BE%E4%B8%BB%E9%A2%98"><span class="toc-text">怎么找主题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Hexo%E5%AE%98%E7%BD%91%E4%B8%BB%E9%A2%98%E5%88%97%E8%A1%A8"><span class="toc-text">Hexo官网主题列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8GitHub%E5%AF%BB%E6%89%BE"><span class="toc-text">在GitHub寻找</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEkaze"><span class="toc-text">安装配置kaze</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE"><span class="toc-text">配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E4%B8%BB%E9%A2%98%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE"><span class="toc-text">修改主题默认配置</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E4%BD%9C%E8%80%85%E4%BF%A1%E6%81%AF"><span class="toc-text">修改作者信息</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E9%A1%B5%E9%9D%A2%E3%80%81%E9%82%AE%E4%BB%B6"><span class="toc-text">关于页面、邮件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%89%88%E6%9D%83%E4%BF%A1%E6%81%AF"><span class="toc-text">版权信息</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AF%AD"><span class="toc-text">结语</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/zhenyu.png" class="author-img">
+
+<p class="author-name">skymoment</p>
+<p class="author-description">stay hungry stay foolish</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>10</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>2</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>4</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="mailto:guxuloop@gmail.com">
+        <i class="iconfont icon-mail society-icon"></i>
+        guxuloop@gmail.com
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E6%89%BE%E4%B8%BB%E9%A2%98"><span class="toc-text">怎么找主题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Hexo%E5%AE%98%E7%BD%91%E4%B8%BB%E9%A2%98%E5%88%97%E8%A1%A8"><span class="toc-text">Hexo官网主题列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8GitHub%E5%AF%BB%E6%89%BE"><span class="toc-text">在GitHub寻找</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEkaze"><span class="toc-text">安装配置kaze</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE"><span class="toc-text">配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E4%B8%BB%E9%A2%98%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE"><span class="toc-text">修改主题默认配置</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E4%BD%9C%E8%80%85%E4%BF%A1%E6%81%AF"><span class="toc-text">修改作者信息</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E9%A1%B5%E9%9D%A2%E3%80%81%E9%82%AE%E4%BB%B6"><span class="toc-text">关于页面、邮件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%89%88%E6%9D%83%E4%BF%A1%E6%81%AF"><span class="toc-text">版权信息</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AF%AD"><span class="toc-text">结语</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术">
+        <div class="categories-list-item">
+          技术
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/文章">
+        <div class="categories-list-item">
+          文章
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\hexo" title="hexo"><div class="tags-list-item">hexo</div></a>
+    
+    <a href="\tags\找工作" title="找工作"><div class="tags-list-item">找工作</div></a>
+    
+    <a href="\tags\数据与算法" title="数据与算法"><div class="tags-list-item">数据与算法</div></a>
+    
+    <a href="\tags\前端" title="前端"><div class="tags-list-item">前端</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E6%89%BE%E4%B8%BB%E9%A2%98"><span class="toc-text">怎么找主题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Hexo%E5%AE%98%E7%BD%91%E4%B8%BB%E9%A2%98%E5%88%97%E8%A1%A8"><span class="toc-text">Hexo官网主题列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8GitHub%E5%AF%BB%E6%89%BE"><span class="toc-text">在GitHub寻找</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEkaze"><span class="toc-text">安装配置kaze</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE"><span class="toc-text">配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E4%B8%BB%E9%A2%98%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE"><span class="toc-text">修改主题默认配置</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E4%BD%9C%E8%80%85%E4%BF%A1%E6%81%AF"><span class="toc-text">修改作者信息</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E9%A1%B5%E9%9D%A2%E3%80%81%E9%82%AE%E4%BB%B6"><span class="toc-text">关于页面、邮件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%89%88%E6%9D%83%E4%BF%A1%E6%81%AF"><span class="toc-text">版权信息</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AF%AD"><span class="toc-text">结语</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021年7月18日</div>
+        <a href="/2021/07/18/Find_Job_02/"><div class="recent-posts-item-content">找工作回忆录（二）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021年7月18日</div>
+        <a href="/2021/07/18/Front_01/"><div class="recent-posts-item-content">前端知识之HTML</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021年7月14日</div>
+        <a href="/2021/07/14/DataStruct_01/"><div class="recent-posts-item-content">数据结构（一）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021年7月14日</div>
+        <a href="/2021/07/14/A_D_S_01/"><div class="recent-posts-item-content">数据结构与算法：前言</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2021 -
+          
+          2021
+        </span>
+        <a href="/" class="footer-link">skymoment's blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://beian.miit.gov.cn/">赣ICP备16008328号-1 </a>
+    </div>
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量
+        <span id="busuanzi_container_site_pv">
+          <span id="busuanzi_value_site_pv"></span>
+        </span>
+        次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数
+        <span id="busuanzi_container_site_uv">
+          <span id="busuanzi_value_site_uv"></span>
+        </span>
+        次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('data-type', 'image');
+      wrapper.setAttribute('href', img[i].src);
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("/js/lib/fslightbox.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
+
+</html>

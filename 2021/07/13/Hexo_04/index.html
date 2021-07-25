@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <meta name="description" content="skymoment 王振宇平凡的一生">
+  <meta name="keywords" content="平凡的一生,skymoment,技术,iOS,前端,java,振宇">
+  <link rel="icon" href="/img/zhenyu.png">
+  <title>skymoment's blog</title>
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="/js/lib/fslightbox.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/zhenyu.png">
+      
+      <span class="navbar-logo-dsc">skymoment's blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">首页 </a>
+    
+    <a href="/archives" class="navbar-menu-item">归档 </a>
+    
+    <a href="/tags" class="navbar-menu-item">标签 </a>
+    
+    <a href="/categories" class="navbar-menu-item">分类 </a>
+    
+    <a href="/about" class="navbar-menu-item">关于 </a>
+    
+    <a href="/links" class="navbar-menu-item">友链 </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+  </div>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      Hexo Kaze 进阶：keywords与fslightbox
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2021-07-13T15:59:59.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2021年7月13日</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/技术/" class="post-meta-link">技术</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>715 字</span>
+    
+    <!-- busuanzi 统计 -->
+    
+    <span class="dot"></span>
+    <span class="busuanzi_container_page_pv">
+      <span>阅读&nbsp;</span><span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/hexo/" class="post-meta-link">hexo</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <p><img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/hexo.png" alt="hexo" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/hexo.png" class="lozad post-image"></p>
+<h3 id="前言">前言</h3>
+<p>关于<code>Hexo</code>的基础使用的，在搭建博客系列的文章阐述的差不多了。今天针对<a target="_blank" rel="noopener" href="https://github.com/theme-kaze">theme Kaze</a>主题一些定制碰到些问题，我们来一一分析道来。</p>
+<h3 id="1、Kaze主题配置description与keywords-不生效">1、Kaze主题配置<code>description</code>与<code>keywords</code> 不生效</h3>
+<p>Kaze主题配置<code>description</code>与<code>keywords</code> 不生效，不利于<code>SEO</code>。虽然参照<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/configuration.html">Hexo 官方文档</a>在<code>_config.kaze.yml</code>文件中配置了<code>description</code>与<code>keywords</code>，但是通过浏览器后台并未发现<code>mata</code>标签。说明主题的作者忘记了😂。还有我把Kaze 主题的源码，放在了我本地的<code>themes</code>文件夹下面，这样我就可以<s>为所欲为了</s>😏</p>
+<p>经过我已一番寻找，在<code>themes/kaze/layout/_partial</code>找到了一个叫<code>head.ejs</code>的文件，对于<code>ejs</code>里面的嵌套语法，相信用<code>php</code>或者<code>java</code>开发过页面的同学，并不陌生。这个文件配置了<code>head</code>头所有的信息。在文件中添加的代码如下</p>
+<pre class="highlight"><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;description&quot;</span> <span class="attr">content</span>=<span class="string">&quot;&lt;%= theme.description %&gt;&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;keywords&quot;</span> <span class="attr">content</span>=<span class="string">&quot;&lt;%= theme.keywords %&gt;&quot;</span>&gt;</span></span><br></pre>
+<p><img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-07-13%2016.42.50.png" alt="head ejs" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-07-13%2016.42.50.png" class="lozad post-image"></p>
+<h3 id="2、Kaze-fslightbox-图片预览-invaild-source">2、Kaze fslightbox 图片预览 invaild source</h3>
+<p><img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-07-13%2016.48.05.png" alt="kaze invalid source" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-07-13%2016.48.05.png" class="lozad post-image"></p>
+<p>我的博客文章的图片村存储在阿里云OSS，引用的时候是通过外链引用的，博客内容没有问题，但是<code>Kaze</code> 集成的<a target="_blank" rel="noopener" href="https://fslightbox.com/">fslightbox</a>图片全屏预览出现了<code>invaild source</code>的现象。</p>
+<p>这个问题坑了我挺长时间的，记录下我的思考过程。</p>
+<ol>
+<li>要找到配置图片预览的文件。一番搜索下找到了位于<code>themes/kaze/layout/_partial/plugin</code>文件夹下面的<code>fslightbox.ejs</code></li>
+<li>观察<code>fslightbox.ejs</code>的代码，发现并无不妥。这个时候我就怀疑了，是不是我阿里云的图片有问题。接着，我在网上找了一张图片，将<code>fslightbox.ejs</code>中的<code>href</code>改成了固定的网上找的图片链接。运行之后，发现真TM可以。问题出在哪呢？我对比了下，我阿里云的是<code>png</code>图片，网上的是<code>jpg</code>图片。接下来我就怀疑是图片格式不支持，为了验证这个猜想，我往阿里云存了一张<code>jpg</code>图片，然后将<code>href</code>链接换成了阿里云的<code>jpg</code>图片链接，运行之后，我懵逼了！扑街~</li>
+</ol>
+<pre class="highlight"><span class="line">网上图片jpg：https://pic3.zhimg.com/80/v2-1d298eb9ff5d4738d7389b8dad8a773a_720w.jpg</span><br><span class="line">阿里云图片jpg：https://fundation-zero.oss-cn-shanghai.aliyuncs.com/test.jpg</span><br><span class="line">阿里云图片png：https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-06-26%2016.41.56.png</span><br></pre>
+<p><img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-07-13%2017.14.31.png" alt="fslightbox ejs" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-07-13%2017.14.31.png" class="lozad post-image"></p>
+<ol start="3">
+<li>剩下两条可以走。第一，找到插件的<a target="_blank" rel="noopener" href="https://github.com/banthagroup/fslightbox">GitHub</a>或者<a target="_blank" rel="noopener" href="https://fslightbox.com/">官网</a>；第二，换掉这个图片预览插件。</li>
+</ol>
+<p>在一番寻找之下<s>个把小时😂</s>，终于在<a target="_blank" rel="noopener" href="https://fslightbox.com/javascript/documentation/types">官网的文档</a>中看到一行英文，犹如上帝之光！！！<br>
+<img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-07-13%2017.09.39.png" alt="上帝之光" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-07-13%2017.09.39.png" class="lozad post-image"></p>
+<p>最后，果断修改位于<code>themes/kaze/layout/_partial/plugin</code>文件夹下面的<code>fslightbox.ejs</code>文件，增加一行代码，没错就是增加一行代码就可以了！！！<s>坑的我茶不思饭不想😂</s></p>
+<p><img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-07-13%2017.10.27.png" alt="fslightbox ejs" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-07-13%2017.10.27.png" class="lozad post-image"></p>
+<p>完美~
+<img src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-07-13%2017.14.55.png" alt="fslightbox ejs" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://zhenyublog.oss-cn-shenzhen.aliyuncs.com/iShot2021-07-13%2017.14.55.png" class="lozad post-image"></p>
+<p>未完待续…</p>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-info copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://skymoment.cn/about">skymoment</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://skymoment.cn/2021/07/13/Hexo_04/">https://skymoment.cn/2021/07/13/Hexo_04/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2021/07/14/Hexo_05/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">Hexo Kaze 进阶：busuanzi 统计 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2021/07/12/Find_Job_01/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">找工作回忆录（一） </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81Kaze%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AEdescription%E4%B8%8Ekeywords-%E4%B8%8D%E7%94%9F%E6%95%88"><span class="toc-text">1、Kaze主题配置description与keywords 不生效</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81Kaze-fslightbox-%E5%9B%BE%E7%89%87%E9%A2%84%E8%A7%88-invaild-source"><span class="toc-text">2、Kaze fslightbox 图片预览 invaild source</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/zhenyu.png" class="author-img">
+
+<p class="author-name">skymoment</p>
+<p class="author-description">stay hungry stay foolish</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>10</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>2</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>4</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="mailto:guxuloop@gmail.com">
+        <i class="iconfont icon-mail society-icon"></i>
+        guxuloop@gmail.com
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81Kaze%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AEdescription%E4%B8%8Ekeywords-%E4%B8%8D%E7%94%9F%E6%95%88"><span class="toc-text">1、Kaze主题配置description与keywords 不生效</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81Kaze-fslightbox-%E5%9B%BE%E7%89%87%E9%A2%84%E8%A7%88-invaild-source"><span class="toc-text">2、Kaze fslightbox 图片预览 invaild source</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术">
+        <div class="categories-list-item">
+          技术
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/文章">
+        <div class="categories-list-item">
+          文章
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\hexo" title="hexo"><div class="tags-list-item">hexo</div></a>
+    
+    <a href="\tags\找工作" title="找工作"><div class="tags-list-item">找工作</div></a>
+    
+    <a href="\tags\数据与算法" title="数据与算法"><div class="tags-list-item">数据与算法</div></a>
+    
+    <a href="\tags\前端" title="前端"><div class="tags-list-item">前端</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81Kaze%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AEdescription%E4%B8%8Ekeywords-%E4%B8%8D%E7%94%9F%E6%95%88"><span class="toc-text">1、Kaze主题配置description与keywords 不生效</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81Kaze-fslightbox-%E5%9B%BE%E7%89%87%E9%A2%84%E8%A7%88-invaild-source"><span class="toc-text">2、Kaze fslightbox 图片预览 invaild source</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021年7月18日</div>
+        <a href="/2021/07/18/Find_Job_02/"><div class="recent-posts-item-content">找工作回忆录（二）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021年7月18日</div>
+        <a href="/2021/07/18/Front_01/"><div class="recent-posts-item-content">前端知识之HTML</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021年7月14日</div>
+        <a href="/2021/07/14/DataStruct_01/"><div class="recent-posts-item-content">数据结构（一）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021年7月14日</div>
+        <a href="/2021/07/14/A_D_S_01/"><div class="recent-posts-item-content">数据结构与算法：前言</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2021 -
+          
+          2021
+        </span>
+        <a href="/" class="footer-link">skymoment's blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    <div class="BbeiAn-info">
+      <a target="_blank" rel="noopener" href="http://beian.miit.gov.cn/">赣ICP备16008328号-1 </a>
+    </div>
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量
+        <span id="busuanzi_container_site_pv">
+          <span id="busuanzi_value_site_pv"></span>
+        </span>
+        次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数
+        <span id="busuanzi_container_site_uv">
+          <span id="busuanzi_value_site_uv"></span>
+        </span>
+        次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('data-type', 'image');
+      wrapper.setAttribute('href', img[i].src);
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("/js/lib/fslightbox.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
+
+</html>
